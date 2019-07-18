@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Monthly_Reporting.Models;
+using PagedList.Mvc;
+using PagedList;
 using Monthly_Reporting.Properties;
 namespace Monthly_Reporting.Controllers
 {
@@ -16,7 +18,9 @@ namespace Monthly_Reporting.Controllers
         Utility mutility = new Utility();
         readonly ManageZone rs = new ManageZone();
         // GET: ManageZone
-        public ActionResult Index()
+        public List<DataRow> list { get; set; }//Regular list to hold data from Datatable
+        public PagedList<DataRow> plist { get; set; }
+        public ActionResult Index(int? page)
         {
             DataTable dt = new DataTable();
             DataTable dt_main_menu = new DataTable();
@@ -59,8 +63,10 @@ namespace Monthly_Reporting.Controllers
                        "select row_number() over(order by BL.BrCode) as id,*,0 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode not in('" + zonetoarray + "')";
                     }
                        
-                    
-                    ViewBag.dt_ManageZone = mutility.dbResult(SQl);
+                    DataTable dtpagelist= mutility.dbResult(SQl);
+                    list = dtpagelist.AsEnumerable().ToList();
+                    var pageNumber = page ?? 1;                   
+                    ViewBag.dt_ManageZone = list.ToPagedList(pageNumber, 10);
                     ViewBag.dt_status = table;
                     
                     return View();
@@ -100,7 +106,7 @@ namespace Monthly_Reporting.Controllers
                     DataTable table = new DataTable();
                     DataColumn column;
                     DataRow row;
-                    DataView view;
+                    
                     column = new DataColumn();
                     column.DataType = System.Type.GetType("System.Int32");
                     column.ColumnName = "BrCode";

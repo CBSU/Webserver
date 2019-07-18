@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using System.Data;
+@using PagedList
+@using PagedList.Mvc;
+
 <div class="right_col" role="main">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -48,75 +51,83 @@
                         </form>
 
                     </fieldset>
-                   
-                    <fieldset class="scheduler-border">
+
+                    <fieldset class="scheduler-border" id="aboutUs">
                         <legend>ព័ត៌មានសាខា</legend>
-                        <div class="col-md-12 nopadding">
+                        <div class="row nopadding">
                             <span class="pull-right">
                                 <button type="button" class="btn btn-primary btn-xs" id="change"><i class="fa fa-check"></i> ផ្លាស់ប្ដូរ</button>
                                 <button type="button" class="btn btn-success btn-xs" id="checkstatus"><i class="fa fa-check-circle-o"></i> ស្ថានភាព</button>
                             </span>
-                        </div>
+                        </div>                        
                         <div id="print">
-                            <table class="table table-bordered">
-                                <thead class="active" style="border-bottom:2pt solid #22d4ae;">
-                                    <tr>
-                                        <th style="text-align:center;">ល.រ</th>
-                                        <th>ឈ្មោះសាខា</th>
-                                        <th style="text-align:center;">លេខកូដសាខា</th>
-                                        <th style="text-align:center;">ប្រភេទសាខា</th>
-                                        <th>អាសយដ្ឋាន</th>
-                                        <th style="text-align:center;">ស្ថានភាព</th>
-                                        <th style="text-align:center;">សកម្មភាព</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="branch_zone">
-                                    @{
-                                        int i = 0;
-                                        foreach (DataRow dr in ViewBag.dt_ManageZone.Rows)
-                                        {
-
-                                            i++;
-                                            string Statussmg = "";
-                                            if (dr["checked"].ToString() == "1"){
-
-                                                foreach (DataRow ds in ViewBag.dt_status.Rows)
+                            <div class="row nopadding">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="active" style="border-bottom:2pt solid #22d4ae;">
+                                            <tr>
+                                                <th style="text-align:center;">ល.រ</th>
+                                                <th>ឈ្មោះសាខា</th>
+                                                <th style="text-align:center;">លេខកូដសាខា</th>
+                                                <th style="text-align:center;">ប្រភេទសាខា</th>
+                                                <th>អាសយដ្ឋាន</th>
+                                                <th style="text-align:center;">ស្ថានភាព</th>
+                                                <th style="text-align:center;">សកម្មភាព</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="branch_zone">
+                                            @{
+                                                int i = 0;
+                                                foreach (var dr in ViewBag.dt_ManageZone)
                                                 {
-                                                    if (dr["BrCode"].ToString()==ds["BrCode"].ToString())
-                                                    {
-                                                        Statussmg = ds["statusconnect"].ToString();
-                                                    }
 
+                                                    i++;
+                                                    string Statussmg = "";
+                                                    if (dr["checked"].ToString() == "1")
+                                                    {
+
+                                                        foreach (DataRow ds in ViewBag.dt_status.Rows)
+                                                        {
+                                                            if (dr["BrCode"].ToString() == ds["BrCode"].ToString())
+                                                            {
+                                                                Statussmg = ds["statusconnect"].ToString();
+                                                            }
+
+                                                        }
+                                                    }
+                                                    <tr>
+                                                        <td style="text-align:center;">@i</td>
+                                                        <td>@dr["BrLetter"].ToString()</td>
+                                                        <td style="text-align:center;">@dr["BrCode"].ToString()</td>
+                                                        <td style="text-align:center;">@dr["BranchType"].ToString()</td>
+                                                        <td>@dr["VPN"].ToString()</td>
+                                                        <td>@Statussmg</td>
+                                                        <td style="text-align:center;">
+                                                            <div class="checkbox nopadding">
+                                                                <label>
+                                                                    @if (dr["checked"].ToString() == "0")
+                                                                    {
+                                                                        <input type="checkbox" id="checkbox" value="@dr["BrCode"]">
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input type="checkbox" id="checkbox" value="@dr["BrCode"]" checked>
+                                                                    }
+
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 }
                                             }
-                                        <tr>
-                                            <td style="text-align:center;">@i</td>
-                                            <td>@dr["BrLetter"].ToString()</td>
-                                            <td style="text-align:center;">@dr["BrCode"].ToString()</td>
-                                            <td style="text-align:center;">@dr["BranchType"].ToString()</td>
-                                            <td>@dr["VPN"].ToString()</td>
-                                            <td>@Statussmg</td>
-                                            <td style="text-align:center;">
-                                                <div class="checkbox nopadding">
-                                                    <label>
-                                                        @if (dr["checked"].ToString() == "0")
-                                                        {
-                                                            <input type="checkbox" id="checkbox" value="@dr["BrCode"]">
-                                                        }
-                                                        else
-                                                        {
-                                                            <input type="checkbox" id="checkbox" value="@dr["BrCode"]" checked>
-                                                        }
+                                        </tbody>
+                                    </table>
 
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                    }
-                                    </tbody>
-                                </table>
+                                </div>
+                            </div>
                         </div>
+                            @Html.PagedListPager((IPagedList)ViewBag.dt_ManageZone, page => Url.Action("Index", new { page }))
+                       
                     </fieldset>
                 </div>
 
@@ -156,8 +167,8 @@
             border: none;
         }
 </style>
-@Scripts.Render("~/Scripts/jquery.min.js")
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <style>
     input[type=checkbox] {
         /* Double-sized Checkboxes */
@@ -181,6 +192,11 @@
     }
 </style>
 <!-- /page content -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("html, body").animate({ scrollTop: $('#aboutUs').offset().top - 0 }, 800);
+    });
+</script>
 <script>
     $(document).ready(function () {
         $("#checkstatus").on("click", function () {
@@ -293,7 +309,7 @@
                             method: "POST",
                             data: { BrZone: BrZone },
                             success: function (data) {
-                                
+
                             }
                         });
 
