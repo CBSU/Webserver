@@ -363,6 +363,15 @@
     <Content Include="Views\WrittenOff\DailyCollection.cshtml" />
     <Content Include="Views\WrittenOff\MonthlyCollection.cshtml" />
     <Content Include="Views\WrittenOff\SummaryReports.cshtml" />
+    <Content Include="Views\Reports\LoanStatment.cshtml" />
+    <Content Include="Views\Reports\LoanOverdue.cshtml" />
+    <Content Include="Views\Reports\SummaryByCos.cshtml" />
+    <Content Include="Views\Reports\SummaryByBranch.cshtml" />
+    <Content Include="Views\Reports\fulltrialbalance.cshtml" />
+    <Content Include="Views\Reports\GLTransactionbybatch.cshtml" />
+    <Content Include="Views\Reports\CollateralInTool.cshtml" />
+    <Content Include="Views\Reports\ListoffWrittenOff.cshtml" />
+    <Content Include="Views\Reports\WrittenoffCollection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

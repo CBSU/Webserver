@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "LoanStatment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <span style="font-size:16px;color:black"><i class="fa fa-edit"></i> ប្រវត្តិបង់ប្រាក់របស់អតិថិនជន</span>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <fieldset class="scheduler-border">
+                        <legend>ព័ត៌មានស្វែងរក</legend>
+                        <form class="form-inline" action="@Url.Action("LoanStatment", "Reports")" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail2">សាខា:</label>
+                                <select class="form-control select2" name="BrCode">
+                                    @{
+                                        foreach (DataRow dr in ViewBag.dt_ManageZone.Rows)
+                                        {
+                                            <option value="@dr["BrCode"].ToString()" selected="@(dr["BrCode"].ToString() ==@ViewBag.BrCode ? "selected" : "")">@dr["BrLetter"].ToString() </option>
+                                        }
+                                    }
+                                    <option value="ALL">All</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputName2">ទាំងអស់:</label>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">                                
+                                <input type="text" class="form-control" autocomplete="off" placeholder="លេខគណនីអតិថិជន" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2">ថ្ងៃចាប់ផ្ដើម:</label>
+                                <input type="text" class="form-control" id="datestart" autocomplete="off" placeholder="@DateTime.Now" />
+                            </div>
+                            <div class="form-group">                                
+                                <input type="text" class="form-control" id="dateend" autocomplete="off" placeholder="@DateTime.Now" />
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top:3px"><i class="fa fa-search"></i> ស្វែងរក</button>
+                            <button type="submit" class="btn btn-success" style="margin-top:3px"><i class="fa fa-download"></i>ទាញយក</button>
+                            @*<a href="#" class="btn btn-primary" style="margin-top:3px" id="downloadExcel"><i class="fa fa-search"></i> ស្វែងរក</a>*@
+                        </form>
+                    </fieldset>
+                    <fieldset class="scheduler-border">
+                        <legend>ព័ត៌មានអតិថិជន</legend>
+                        <div class="row nopadding">
+                            <div class="pull-right">
+                                <button class="btn btn-primary"><i class="fa fa-print"></i> បោះពុម្ភ</button>
+                            </div>
+                        </div>
+                        <div class="row nopadding">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead style="border-bottom:2pt solid #22d4ae;">
+                                        <tr class="active">
+                                            <th>BrCode</th>
+                                            <th>BrName</th>
+                                            <th>Accoun Number</th>
+                                            <th>CID</th>
+                                            <th>DisplayName</th>
+                                            <th>Trn</th>
+                                            <th>TrnDate</th>
+                                            <th>ValueDate</th>
+                                            <th>TrnType</th>
+                                            <th>ShortDesc</th>
+                                            <th>FullDesc</th>
+                                            <th>TrnAmt</th>
+                                            <th>TrnPenAmt</th>
+                                            <th>TrnTrinAmt</th>
+                                            <th>BalAmt</th>
+                                            <th>TrnDesc</th>
+
+                                        </tr>
+                                        @foreach (DataRow dr in ViewBag.dt_Report.Rows)
+                                        {
+                                            <tr>
+                                                <td>@dr["AccountNumber"].ToString()</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+
+                                            </tr>
+                                        }
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@Scripts.Render("~/Scripts/jquery.min.js")
+<style>
+    legend {
+        font-size: 12px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+    });
+
+    jQuery(document).ready(function () {
+
+        $("#datestart").datepicker({
+            format: 'yyyy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '+50y:c+nn',
+            maxDate: '-1d'
+        });
+        $("#dateend").datepicker({
+            format: 'yyyy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '+50y:c+nn',
+            maxDate: '-1d'
+        });
+    });
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    $("#downloadExcel").on("click", function () {
+        var reportcode = $("#reportcode").val();
+      window.location.href = "/Reports/ExportExcel?reportcode=" + reportcode;
+        //$.ajax({
+        //    url: '/Reports/ExportExcel',
+        //    method: "POST",
+        //    data: { CSRF_TOKEN: CSRF_TOKEN, reportcode: reportcode },
+        //    success: function (data) {
+        //        console.log(data);
+
+        //        //swal("បញ្ជាក់!", "លោកអ្នកលុបទទួលបានជោគជ័យ.", {
+        //        //    icon: "success",
+        //        //    timer: 1400,
+        //        //    buttons: false,
+        //        //});
+        //        //window.location.href = "/Reports";
+
+        //    }
+        //});
+    });
+</script>
+

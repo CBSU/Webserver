@@ -128,6 +128,28 @@ namespace Monthly_Reporting.Models
             }
             return dtResult;
         }
+        public DataTable dtOnlyOneBranch(string strsql, string brcode)
+        {
+
+            DataTable dtresult = new DataTable();
+            DataTable dtBrcode = new DataTable();
+            SqlConnection sqlcon = new SqlConnection();
+
+            string brlist = "select * from BRANCH_LISTS where flag=1 and BrCode in('" + brcode + "');";
+            dtBrcode = dbResult(brlist);
+            foreach (DataRow dr in dtBrcode.Rows)
+            {
+                sqlcon = BrConnection(dr["FullDbName"].ToString(), "sa", "Sa@#$Mbwin", dr["VPN"].ToString());
+                dtresult =dbBranchResult(strsql, sqlcon);
+                if (sqlcon.State != ConnectionState.Open)
+                {
+                    return dtresult;
+                }
+            }
+
+            return dtresult;
+        }
+
         public DataTable dbResult(string sqlstring)
         {
             DataTable dtResult = new DataTable();

@@ -37,6 +37,7 @@ namespace Monthly_Reporting.Controllers
                 {
                     UserAccessRightController UsAccRight = new UserAccessRightController();
                     string userkey = Convert.ToString(Session["user_key"]);
+                    string branchoption= Convert.ToString(Session["branch_option"]);
                     dt = UsAccRight.UserAccessRight(userkey);
                     dt_main_menu = UsAccRight.Main_Menu(userkey);
                     ViewBag.manin_menu = dt_main_menu;
@@ -44,11 +45,20 @@ namespace Monthly_Reporting.Controllers
 
                    
                     
-                    string BrZone = Convert.ToString(mutility.dbSingleResult("select branch_zone from users where user_key='S001'"));
+                    string BrZone = Convert.ToString(mutility.dbSingleResult("select branch_zone from users where user_key='"+ userkey + "'"));
                     var zone_array = BrZone.Split(',');
                     string zonetoarray = string.Join("','", zone_array.Skip(0));
-                    string SQl = "select row_number() over(order by BL.BrCode) as id,*  ,1 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode in('"+ zonetoarray + "') union all " +
-                        "select row_number() over(order by BL.BrCode) as id,*,0 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode not in('" + zonetoarray + "')";
+                    string SQl = "";
+                    if (branchoption.Replace(" ", "") == "T")
+                    {
+                        SQl = "select row_number() over(order by BL.BrCode) as id,*  ,1 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode in('" + zonetoarray + "')";
+                    }
+                    else
+                    {
+                        SQl = "select row_number() over(order by BL.BrCode) as id,*  ,1 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode in('" + zonetoarray + "') union all " +
+                       "select row_number() over(order by BL.BrCode) as id,*,0 as checked from BRANCH_LISTS BL inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode not in('" + zonetoarray + "')";
+                    }
+                       
                     
                     ViewBag.dt_ManageZone = mutility.dbResult(SQl);
                     ViewBag.dt_status = table;

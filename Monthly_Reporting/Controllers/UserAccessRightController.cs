@@ -90,16 +90,14 @@ namespace Monthly_Reporting.Controllers
             //Get main menu
             string Sql_Main =@"
                     SELECT * FROM Sys_Permissions_role Spr
-                    INNER JOIN Sys_function_permissions Sfp
-                    on Spr.functype = Sfp.functype
-                    where Sfp.menulist = 'T' and Spr.user_key = '"+ userkey + "' and Spr.flag = 1";
+                    INNER JOIN Sys_function_permissions Sfp on Spr.functype = Sfp.functype
+                    where Sfp.menulist = 'T' and Spr.user_key = '"+ userkey + "' and Spr.flag = 1 and Sfp.flag=1";
    
             xresult = ExecuteTable(Sql_Main,con,null,out MainMenu);
             //ds.Tables.Add(MainMenu);
             string SqL_SubMain = @"
                     SELECT * FROM Sys_Permissions_role Spr
-                    INNER JOIN Sys_function_permissions Sfp
-                    on Spr.functype = Sfp.functype
+                    INNER JOIN Sys_function_permissions Sfp on Spr.functype = Sfp.functype
                     where Sfp.menulist = 'T' and Spr.user_key = '"+ userkey + "' and Spr.flag =2";
             xresult1 = ExecuteTable(SqL_SubMain, con, null, out Sub_menu);
           
@@ -112,12 +110,11 @@ namespace Monthly_Reporting.Controllers
 
                         string SQl = @"
                     SELECT * FROM Sys_function_permissions Sfp
-                    INNER JOIN Sys_permissions_role Spr
-                    on Spr.functype = Sfp.functype
+                    INNER JOIN Sys_permissions_role Spr on Spr.functype = Sfp.functype
                     where Sfp.menulist = 'T' 
                     and Spr.user_key = '" + userkey + @"' 
                     and Sfp.flag =1
-                    and Spr.flag!=0
+                    and Spr.flag in(1,2)
                     and Sfp.parent_id='" + dr["functype"].ToString() + @"'
                     ORDER BY Sfp.order_key ASC";
                         xresult2 = ExecuteTable(SQl, con, null, out Sum_in_array);
@@ -184,8 +181,7 @@ namespace Monthly_Reporting.Controllers
             //Get main menu
             string Sql_Main = @"
                     SELECT * FROM Sys_Permissions_role Spr
-                    INNER JOIN Sys_function_permissions Sfp
-                    on Spr.functype = Sfp.functype
+                    INNER JOIN Sys_function_permissions Sfp on Spr.functype = Sfp.functype
                     where Sfp.menulist = 'T' and Spr.user_key = '"+ userkey + "' and Spr.flag = 1";
 
             xresult = ExecuteTable(Sql_Main, con, null, out MainMenu);

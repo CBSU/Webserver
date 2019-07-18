@@ -47,9 +47,9 @@
                             @*<h3>General</h3>*@
                             <ul class="nav side-menu">
                                 <li>
-                                    <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-home"></i> ទំរព័រដើម <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html">Dashboard</a></li>
+                                        <li><a href="@Url.Action("Index", "Home")">Dashboard</a></li>
                                     </ul>
                                 </li>
                                 @foreach (DataRow rmain in ViewBag.manin_menu.Rows)
@@ -91,7 +91,7 @@
                         <a data-toggle="tooltip" data-placement="top" title="Lock">
                             <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                         </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="@Url.Action("LogOut", "Login")">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -131,10 +131,10 @@
                             <li role="presentation" class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
+                                    <span class="badge bg-green">0</span>
                                 </a>
 
-                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                @*<ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                     <li>
                                         <a>
                                             <span class="image"><img src="~/assets/images/img.jpg" alt="Profile Image" /></span>
@@ -192,7 +192,7 @@
                                             </a>
                                         </div>
                                     </li>
-                                </ul>
+                                </ul>*@
                             </li>
                             <li class="nohover">
                                 <a class="nohover">Report Date:<span style="margin-left:10px;" class="badge badge-secondary">@ViewBag.CurrRunDate</span></a>

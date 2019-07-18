@@ -49,7 +49,9 @@ namespace Monthly_Reporting.Controllers
                 Session["UserName"]= dr["UserName"].ToString();
                 Session["user_key"] = dr["user_key"].ToString();
                 Session["report_code"] = dr["report_code"].ToString();
-                Session["branch_zone"] = dr["branch_zone"].ToString(); 
+                Session["branch_zone"] = dr["branch_zone"].ToString();
+                Session["branch_option"] = dr["branch_option"].ToString();
+                
                 SqlConn.Close();                
                 return RedirectToAction("index", "Home");
                 //index is main function and Home is main Class Name on Co
