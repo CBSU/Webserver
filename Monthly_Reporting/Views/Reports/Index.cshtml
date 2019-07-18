@@ -34,29 +34,6 @@
                     <fieldset class="scheduler-border">
                         <legend>ព័ត៌មានស្វែងរក</legend>
                         <form class="form-inline" action="@Url.Action("ExecuteScript", "Reports")" method="post">
-                           
-                            <div class="form-group">
-                                <label for="exampleInputName2">ថ្ងៃចាប់ផ្ដើម:</label>
-                                <input type="text" class="form-control" id="datestart" autocomplete="off" placeholder="@DateTime.Now" />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputName2">ថ្ងៃបញ្ចប់:</label>
-                                <input type="text" class="form-control" id="dateend" autocomplete="off" placeholder="@DateTime.Now" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputName2">ឈ្មោះរបាយការណ៍:</label>
-                                <select class="form-control select2" name="ReportCode" id="reportcode">
-                                    @{
-                                        string selectedOption = ViewBag.ReportCode;
-                                        foreach (DataRow dr in ViewBag.dt_Report.Rows)
-                                        {
-                                            <option value="@dr["Report_Code"].ToString()" selected="@(selectedOption==dr["Report_Code"].ToString() ? "selected" : "")">@dr["Name"].ToString() </option>
-                                        }
-
-                                    }
-                                </select>
-                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail2">សាខា:</label>
                                 <select class="form-control select2" name="BrCode">
@@ -69,9 +46,24 @@
                                     <option value="ALL">All</option>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputName2">ឈ្មោះរបាយការណ៍:</label>
+                                <select class="form-control select2" name="ReportCode" id="reportcode">
+                                    <option value="1">List of loan Detail</option>
+                                    @{
+                                        string selectedOption = ViewBag.ReportCode;
+                                        foreach (DataRow dr in ViewBag.dt_Report.Rows)
+                                        {
+                                            <option value="@dr["Report_Code"].ToString()" selected="@(selectedOption==dr["Report_Code"].ToString() ? "selected" : "")">@dr["Name"].ToString() </option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            
 
 
-                            <button type="submit" class="btn btn-success" style="margin-top:3px"><i class="fa fa-download"></i> ទាញយក</button>
+                            <button type="submit" class="btn btn-success" name="download" value="download" style="margin-top:3px"><i class="fa fa-download"></i> ទាញយក</button>
                             @*<a href="#" class="btn btn-success" style="margin-top:3px" id="downloadExcel"><i class="fa fa-download"></i> Download</a>*@
                         </form>
                     </fieldset>
