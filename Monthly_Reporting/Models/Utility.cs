@@ -111,10 +111,9 @@ namespace Monthly_Reporting.Models
         {
             DataTable dtResult = new DataTable();
             ActResult xresult = new ActResult();
-            SqlConnection conn =sqlConn;
-            conn.Open();
+           
             string sql = sqlstring;
-            xresult = ExecuteTable(sql, conn, null, out dtResult);
+            xresult = ExecuteTable(sql, sqlConn, null, out dtResult);
             if (xresult.Result == ActResult.ResultType.Success)
             {
                 if (dtResult.Rows.Count > 0)
@@ -135,14 +134,17 @@ namespace Monthly_Reporting.Models
             DataTable dtBrcode = new DataTable();
             SqlConnection sqlcon = new SqlConnection();
 
-            string brlist = "select * from BRANCH_LISTS where flag=1 and BrCode in('" + brcode + "');";
+            string brlist = @"select * from BRANCH_LISTS BL
+                           inner join VPN V ON V.BrCode=BL.BrCode where BL.flag=1 and BL.BrCode in('" + brcode + "')";
+            
             dtBrcode = dbResult(brlist);
             foreach (DataRow dr in dtBrcode.Rows)
             {
                 sqlcon = BrConnection(dr["FullDbName"].ToString(), "sa", "Sa@#$Mbwin", dr["VPN"].ToString());
-                dtresult =dbBranchResult(strsql, sqlcon);
+                
                 if (sqlcon.State != ConnectionState.Open)
                 {
+                    dtresult = dbBranchResult(strsql, sqlcon);
                     return dtresult;
                 }
             }
