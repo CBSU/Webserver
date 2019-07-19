@@ -2256,7 +2256,7 @@ namespace Monthly_Reporting.Controllers
                                     
                                 ";
 
-
+                    ViewBag.All = "off";
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, rs.BrCode);
 
@@ -4764,7 +4764,7 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.datestart = re.datestart;
                     ViewBag.dateend = re.dateend;
                     ViewBag.Acc = re.accountnumber;
-
+                    ViewBag.All = All;
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, re.BrCode);
                     downloadLoanStatement = mutility.dtOnlyOneBranch(Sql, re.BrCode);
@@ -4855,7 +4855,7 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.datestart = re.datestart;
                     ViewBag.dateend = re.dateend;
                     ViewBag.Acc = re.accountnumber;
-
+                    
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, re.BrCode);
                     downloadLoanStatement = mutility.dtOnlyOneBranch(Sql, re.BrCode);
@@ -4909,7 +4909,7 @@ namespace Monthly_Reporting.Controllers
 
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, rs.BrCode);
-
+                    ViewBag.All = "off";
                     return View();
                 }
                 else
@@ -5266,6 +5266,7 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.datestart = re.datestart;
                     ViewBag.dateend = re.dateend;
                     ViewBag.Acc = re.accountnumber;
+                    ViewBag.All = All;
 
                     DataTable dtreports = new DataTable();
                     dtreports = mutility.dtOnlyOneBranch(Sql, re.BrCode);
@@ -5322,7 +5323,7 @@ namespace Monthly_Reporting.Controllers
 
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, rs.BrCode);
-
+                    ViewBag.All = "off";
                     return View();
                 }
                 else
@@ -5612,6 +5613,7 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.datestart = re.datestart;
                     ViewBag.dateend = re.dateend;
                     ViewBag.Acc = re.accountnumber;
+                    ViewBag.All = All;
 
                     DataTable dtreports = new DataTable();
                     dtreports = mutility.dtOnlyOneBranch(Sql, re.BrCode);
@@ -5668,7 +5670,7 @@ namespace Monthly_Reporting.Controllers
 
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, rs.BrCode);
-
+                    ViewBag.All = "off";
                     return View();
                 }
                 else
