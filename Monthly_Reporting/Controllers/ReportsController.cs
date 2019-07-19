@@ -10,6 +10,8 @@ using ClosedXML.Excel;
 using Monthly_Reporting.Models;
 using Monthly_Reporting.Properties;
 using OfficeOpenXml;
+using PagedList.Mvc;
+using PagedList;
 namespace Monthly_Reporting.Controllers
 {
     public class ReportsController : Controller
@@ -20,6 +22,8 @@ namespace Monthly_Reporting.Controllers
         ReportDateController CurrRunDate = new ReportDateController();
         DataTable downloadLoanStatement = new DataTable();
         string BrCode = "";
+        public List<DataRow> list { get; set; }//Regular list to hold data from Datatable
+        public PagedList<DataRow> plist { get; set; }
         // GET: Reports
         public ActionResult Index()
         {
@@ -1835,7 +1839,7 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.dt_ManageZone = this.brlist(userkey);
 
                     string Sql =@"";
-
+                    ViewBag.All = "off";
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
                     ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql,rs.BrCode);
 
@@ -2197,10 +2201,12 @@ namespace Monthly_Reporting.Controllers
                     ViewBag.datestart = re.datestart;
                     ViewBag.dateend = re.dateend;
                     ViewBag.Acc = re.accountnumber;
+                    ViewBag.All = All;
+                    DataTable dtResult= mutility.dtOnlyOneBranch(Sql, re.BrCode);
 
                     ViewBag.CurrRunDate = CurrRunDate.CurrRunDate(userkey);
-                    ViewBag.dt_Report = mutility.dtOnlyOneBranch(Sql, re.BrCode);
-                    downloadLoanStatement = mutility.dtOnlyOneBranch(Sql, re.BrCode);
+                    ViewBag.dt_Report = dtResult;
+                    downloadLoanStatement = dtResult;
                     BrCode = re.BrCode;
                     if(re.download== "download")
                     {

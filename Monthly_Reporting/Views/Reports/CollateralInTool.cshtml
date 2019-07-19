@@ -54,7 +54,16 @@
                                 <label for="exampleInputName2">ទាំងអស់:</label>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="all">
+                                        @{
+                                            if (ViewBag.All == "on")
+                                            {
+                                                <input type="checkbox" name="all" checked="checked">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="all">
+                                            }
+                                        }
                                     </label>
                                 </div>
                             </div>

@@ -43,7 +43,7 @@
                                         string BrCode = ViewBag.BrCode;
                                         foreach (DataRow dr in ViewBag.dt_ManageZone.Rows)
                                         {
-                                            <option value="@dr["BrCode"].ToString()" selected="@(dr["BrCode"].ToString()==BrCode ? "selected" : "")">@dr["BrLetter"].ToString() </option>
+                                            <option value="@dr["BrCode"].ToString()" selected="@(BrCode==dr["BrCode"].ToString() ? "selected" : "")">@dr["BrLetter"].ToString() </option>
                                         }
                                     }
                                     <option value="ALL">All</option>
@@ -54,7 +54,17 @@
                                 <label for="exampleInputName2">ទាំងអស់:</label>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="all">
+                                        @{
+                                            if (ViewBag.All == "on")
+                                            {
+                                                <input type="checkbox" name="all" checked="checked">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="all">
+                                            }
+                                        }
+
                                     </label>
                                 </div>
                             </div>
