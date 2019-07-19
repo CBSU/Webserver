@@ -9,5 +9,6 @@ namespace Monthly_Reporting.Models
     {
         public string Brcode { get; set; }
         public string BrZone { get; set; }
+       
     }
 }

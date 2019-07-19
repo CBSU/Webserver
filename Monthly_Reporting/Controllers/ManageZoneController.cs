@@ -84,7 +84,8 @@ namespace Monthly_Reporting.Controllers
         [HttpPost]
         public ActionResult UpdateZone(ManageZone br)
         {
-            string daily = @"UPDATE Users set branch_zone='"+br.BrZone.Replace("[","").Replace("]","").Replace("\"\"", "").Replace("\"", "") + "' where user_key='S001'";
+            string userkey = Convert.ToString(Session["user_key"]);
+            string daily = @"UPDATE Users set branch_zone='"+br.BrZone.Replace("[","").Replace("]","").Replace("\"\"", "").Replace("\"", "") + "' where user_key='"+ userkey + "'";
             mutility.ExecuteNoneQueryOLEDB(daily);
             return RedirectToAction("ManageZone", "Index");
         }

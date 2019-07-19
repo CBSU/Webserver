@@ -206,18 +206,18 @@ $(document).ready(function() {
 // /Switchery
 
 
-// iCheck
-$(document).ready(function() {
-    if ($("input.flat")[0]) {
-        $(document).ready(function () {
-            $('input.flat').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green'
-            });
-        });
-    }
-});
-// /iCheck
+//// iCheck
+//$(document).ready(function() {
+//    if ($("input.flat")[0]) {
+//        $(document).ready(function () {
+//            $('input.flat').iCheck({
+//                checkboxClass: 'icheckbox_flat-green',
+//                radioClass: 'iradio_flat-green'
+//            });
+//        });
+//    }
+//});
+//// /iCheck
 
 // Table
 $('table input').on('ifChecked', function () {
@@ -253,12 +253,12 @@ $('.bulk_action input#check-all').on('ifUnchecked', function () {
 });
 
 function countChecked() {
-    if (checkState === 'all') {
-        $(".bulk_action input[name='table_records']").iCheck('check');
-    }
-    if (checkState === 'none') {
-        $(".bulk_action input[name='table_records']").iCheck('uncheck');
-    }
+    //if (checkState === 'all') {
+    //    $(".bulk_action input[name='table_records']").iCheck('check');
+    //}
+    //if (checkState === 'none') {
+    //    $(".bulk_action input[name='table_records']").iCheck('uncheck');
+    //}
 
     var checkCount = $(".bulk_action input[name='table_records']:checked").length;
 
@@ -2581,9 +2581,9 @@ if (typeof NProgress != 'undefined') {
 				  ]
 				});
 				$datatable.on('draw.dt', function() {
-				  $('checkbox input').iCheck({
-					checkboxClass: 'icheckbox_flat-green'
-				  });
+				 // $('checkbox input').iCheck({
+					//checkboxClass: 'icheckbox_flat-green'
+				 // });
 				});
 
 				TableManageButtons.init();
